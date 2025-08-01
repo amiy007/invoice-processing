@@ -6,10 +6,9 @@ import { useDropzone } from 'react-dropzone';
 type FileUploadProps = {
   onFileSelected: (file: File) => void;
   isLoading: boolean;
-  acceptedTypes?: string[];
 };
 
-const FileUpload = ({ onFileSelected, isLoading, acceptedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'] }: FileUploadProps) => {
+const FileUpload = ({ onFileSelected, isLoading }: FileUploadProps) => {
   const [error, setError] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {

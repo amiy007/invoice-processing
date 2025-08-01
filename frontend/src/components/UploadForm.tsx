@@ -5,6 +5,13 @@ import axios from 'axios';
 import InvoiceEditor from './InvoiceEditor';
 
 
+interface LineItem {
+  description: string;
+  quantity: number;
+  unit_price: number;
+  total_price: number;
+}
+
 interface InvoiceData {
   invoice_number: string;
   vendor_name: string;
@@ -12,7 +19,7 @@ interface InvoiceData {
   due_date: string;
   total_amount: string;
   currency: string;
-  line_items: Array<any>;
+  line_items: LineItem[];
 }
 
 const UploadForm = () => {

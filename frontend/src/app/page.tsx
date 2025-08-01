@@ -10,7 +10,31 @@ type ProcessState = 'idle' | 'uploading' | 'processing' | 'completed' | 'error';
 export default function Home() {
   const [processState, setProcessState] = useState<ProcessState>('idle');
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<any>(null);
+  interface InvoiceResult {
+    data: {
+      vendor_name?: string;
+      invoice_number?: string;
+      date?: string;
+      due_date?: string;
+      subtotal?: number;
+      tax?: number;
+      total?: number;
+      line_items?: Array<{
+        description: string;
+        quantity?: number;
+        unit_price?: number;
+        amount: number;
+      }>;
+      [key: string]: string | number | boolean | undefined | null | Array<{
+        description: string;
+        quantity?: number;
+        unit_price?: number;
+        amount: number;
+      }>;
+    };
+  }
+  
+  const [result, setResult] = useState<InvoiceResult | null>(null);
 
   const handleFileSelected = async (file: File) => {
     setProcessState('uploading');
@@ -97,9 +121,18 @@ export default function Home() {
               </div>
             )}
 
-            {processState === 'completed' && result && (
+            {processState === 'completed' && result && result.data && (
               <InvoiceResults 
-                data={result} 
+                data={{
+                  vendor_name: result.data.vendor_name,
+                  invoice_number: result.data.invoice_number,
+                  date: result.data.date,
+                  due_date: result.data.due_date,
+                  subtotal: result.data.subtotal,
+                  tax: result.data.tax,
+                  total: result.data.total,
+                  line_items: result.data.line_items || []
+                }} 
                 onReset={handleReset} 
               />
             )}

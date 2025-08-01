@@ -45,7 +45,7 @@ const InvoiceEditor: React.FC<Props> = ({ data, onChange }) => {
           <label className="w-40 font-medium capitalize">{field.replace(/_/g, ' ')}:</label>
           <input
             className="flex-1 border px-2 py-1 rounded"
-            value={(data as any)[field]}
+            value={data[field as keyof InvoiceData] as string}
             onChange={(e) => handleFieldChange(field as keyof InvoiceData, e.target.value)}
           />
         </div>

@@ -19,7 +19,7 @@ type InvoiceData = {
   tax?: number;
   total?: number;
   line_items?: LineItem[];
-  [key: string]: any;
+  [key: string]: string | number | LineItem[] | undefined;
 };
 
 type InvoiceResultsProps = {
@@ -71,12 +71,14 @@ const InvoiceResults = ({ data, onReset }: InvoiceResultsProps) => {
   const [activeTab, setActiveTab] = useState<'details' | 'raw'>('details');
   
   // Filter out empty values and format the data for display
-  const filteredData = Object.entries(data).reduce((acc, [key, value]) => {
+  const filteredData = Object.entries(data).reduce<Partial<InvoiceData>>((acc, [key, value]) => {
     if (value !== undefined && value !== null && value !== '') {
-      acc[key] = value;
+      // We know the key is a keyof InvoiceData because we got it from Object.entries(data)
+      const typedKey = key as keyof InvoiceData;
+      acc[typedKey] = value as InvoiceData[typeof typedKey];
     }
     return acc;
-  }, {} as Record<string, any>);
+  }, {});
 
   return (
     <div className="space-y-6 animate-fade-in">
