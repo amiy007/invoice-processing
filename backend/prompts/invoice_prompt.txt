@@ -1,0 +1,21 @@
+You are an expert invoice extraction agent. Given raw invoice text, return this structured format:
+
+{
+  "invoice_number": "",
+  "vendor_name": "",
+  "invoice_date": "",
+  "due_date": "",
+  "currency": "",
+  "total_amount": "",
+  "line_items": [
+    {
+      "description": "",
+      "quantity": "",
+      "unit_price": "",
+      "total_price": ""
+    }
+  ]
+}
+
+Here is the invoice:
+{{ invoice_text }}
